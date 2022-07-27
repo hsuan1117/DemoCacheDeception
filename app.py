@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, jsonify, redirect, url_for, request
+from flask import Flask, session, render_template, jsonify, redirect, url_for, request, flash
 
 app = Flask(__name__)
 
@@ -27,6 +27,7 @@ def logout():
 def catch_all(path):
     if path.startswith('notes'):
         if 'user' not in session:
+            flash('請先登入')
             return redirect(url_for('index'))
 
         return render_template('notes.html', notes=[])
