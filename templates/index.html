@@ -58,18 +58,20 @@
         </div>
     </div>
     <script>
-    async function submit(e){
-        const { data } = await axios.post('/login', {
-            email: $('#email-address').val(),
-            password: $('#password').val()
-        }, {
+        async function submit(e) {
+            const {data} = await axios.post('/login', {
+                email: $('#email-address').val(),
+                password: $('#password').val()
+            }, {})
+            if (data.status) {
+                Swal.fire({
+                    title: "登入成功"
+                }).then(()=>{
+                    location.href = '/profile'
+                })
+            }
 
-        })
-        Swal.fire({
-            title: data
-        })
-
-        return false
-    }
+            return false
+        }
     </script>
 {% endblock %}
