@@ -33,6 +33,25 @@
                                        value="{{ user['birthday'] }}">
                             </div>
                         </div>
+                        <div class="sm:col-span-4">
+                            <label for="sex" class="block text-sm font-medium text-gray-700"> 性別 </label>
+                            <div class="mt-1 flex rounded-md shadow-sm">
+                                <select id="sex"
+                                        name="sex"
+                                        class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300">
+                                    <option value="男" {% if(user['sex']=='男')%}selected{% endif %}>男生</option>
+                                    <option value="女" {% if(user['sex']=='女')%}selected{% endif %}>女生</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-4">
+                            <label for="address" class="block text-sm font-medium text-gray-700"> 地址 </label>
+                            <div class="mt-1 flex rounded-md shadow-sm">
+                                <input type="text" name="address" id="address"
+                                       class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
+                                       value="{{ user['address'] }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="pt-5">

@@ -25,7 +25,7 @@ def save():
     data = json.load(open('data/user.json', 'r'))
     email = session['user']
     print(email)
-    if data[email] is not None:
+    if email in data and data[email]:
         data[email] = data[email].update(request.form)
     else:
         data[email] = request.form
