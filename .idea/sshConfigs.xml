@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="OPEN_SSH" host="a1.infra.hsuan.app" id="5145801e-8f1c-48f8-aef7-c43d7e733a79" port="22" nameFormat="DESCRIPTIVE" username="hsuan" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

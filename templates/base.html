@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <title>{% block title %}{% endblock %} | 筆記系統</title>
+    <script src="https://unpkg.com/picmo@latest/dist/umd/picmo.js"></script>
+    <script src="https://unpkg.com/@picmo/popup-picker@latest/dist/umd/picmo-popup.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="h-full">
+
+<nav class="bg-gray-800 w-full border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <div class="w-full flex flex-wrap justify-end items-center">
+        <button data-collapse-toggle="navbar-default" type="button"
+                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="navbar-default" aria-expanded="false"
+                onclick="toggleMenu()"
+        >
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="flex flex-col mt-4 md:flex-row md:space-x-4 md:mt-0 md:text-sm md:font-medium">
+                <!--<li>
+                    <a href="#"
+                       class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                       aria-current="page">Home</a>
+                </li>-->
+                {% if 'user' in session %}
+                    <span
+                       class="
+                                    {% if request.path==url_for('logout') %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}
+                                    px-3 py-2 rounded-md text-sm font-medium
+                               ">{{ session['user'] }}</span>
+                    <a href="{{ url_for('logout') }}"
+                       class="
+                                    {% if request.path==url_for('logout') %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}
+                                    px-3 py-2 rounded-md text-sm font-medium
+                               ">登出</a>
+                {% else %}
+                    <a href="{{ url_for('index') }}"
+                       class="
+                                    {% if request.path==url_for('index') %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}
+                                    px-3 py-2 rounded-md text-sm font-medium
+                               ">登入</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="bg-red-600 flex fixed w-full py-2 px-3 items-center justify-between flex-wrap"
+             id="flash_notification">
+            <div class="w-0 flex-1 flex items-center">
+                <p class="ml-3 font-medium text-white truncate text-sm">
+                    <span>{{ messages[0] }}</span>
+                </p>
+            </div>
+            <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+                <button type="button"
+                        class="-mr-1 flex p-2 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
+                        onclick="document.querySelector('#flash_notification').style.display = 'none'">
+                    <span class="sr-only">Dismiss</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke-width="2" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% endwith %}
+<div class="w-full h-full">
+    {% block content %}
+    {% endblock %}
+</div>
+<script>
+    function toggleMenu() {
+        document.querySelector('#navbar-default').classList.toggle('hidden')
+    }
+</script>
+</body>
+</html>
