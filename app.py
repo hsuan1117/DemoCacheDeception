@@ -1,4 +1,6 @@
 import json
+import os.path
+
 from requests import request as http
 
 from flask import Flask, session, render_template, jsonify, redirect, url_for, request, flash
@@ -64,12 +66,18 @@ def logout():
 @app.route('/', methods=['GET', 'POST'], defaults={'path': ''})
 @app.route('/<path:path>', methods=['GET', 'POST'])
 def catch_all(path):
+    if any([path.endswith(f) for f in ['.jpg', '.png']]):
+        if os.path.exists(f'cache/{path.replace("/", "-")}'):
+            return open(f'cache/{path.replace("/", "-")}', 'r').read()
+
     if path.startswith('profile'):
         if 'user' not in session:
             flash('請先登入')
             return redirect(url_for('index'))
         data = json.load(open('data/user.json', 'r'))
-        return render_template('profile.html', user=data.get(session['user']))
+        response = render_template('profile.html', user=data.get(session['user']))
+        open(f'cache/{path.replace("/", "-")}', 'w').write(response)
+        return response
 
     return path
 

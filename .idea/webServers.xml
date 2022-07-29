@@ -5,9 +5,10 @@
       <webServer id="bbe1622d-5ec6-4150-aa4b-7b6f9661e55b" name="A1">
         <fileTransfer rootFolder="/home/hsuan/DemoCacheDeception" accessType="SFTP" host="a1.infra.hsuan.app" port="22" sshConfigId="5145801e-8f1c-48f8-aef7-c43d7e733a79" sshConfig="hsuan@a1.infra.hsuan.app:22 agent" authAgent="true">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" connections="10" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
+        <option name="numberOfConnections" value="10" />
       </webServer>
     </option>
   </component>
